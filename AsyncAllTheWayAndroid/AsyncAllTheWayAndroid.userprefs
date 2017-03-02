@@ -1,7 +1,8 @@
 ﻿<Properties StartupConfiguration="{41213704-12B3-4A3A-931A-9A813D2E5348}|Default" GitUserInfo="UsingGIT">
-  <MonoDevelop.Ide.Workbench ActiveDocument="AsyncAllTheWayAndroid/MainActivity.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AsyncAllTheWayAndroid Status">
     <Files>
       <File FileName="AsyncAllTheWayAndroid/MainActivity.cs" Line="79" Column="1" />
+      <File FileName="AsyncAllTheWayAndroid Status" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.AsyncAllTheWayAndroid AndroidDesignerPreferredDevice="Nexus 4" PreferredExecutionTarget="Android.AVD_for_Nexus_5_by_Google_Marsh" />

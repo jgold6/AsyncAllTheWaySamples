@@ -66,7 +66,7 @@ namespace AsyncAllTheWayAndroid
 
 		async Task<string> GetTextAsync(int position)
 		{
-			await Task.Delay(300); // to simulate a task that takes loinger
+			await Task.Delay(300); // to simulate a task that takes longer
 			if (client == null)
 				client = new HttpClient();
 			string response = await client.GetStringAsync("http://example.com");
