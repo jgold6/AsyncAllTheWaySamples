@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncAllTheWayiOS", "AsyncAllTheWayiOS\AsyncAllTheWayiOS.csproj", "{B69DC3FA-15B0-4530-A4D6-372EB6F809BC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhone = Release|iPhone
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B69DC3FA-15B0-4530-A4D6-372EB6F809BC}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{B69DC3FA-15B0-4530-A4D6-372EB6F809BC}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{B69DC3FA-15B0-4530-A4D6-372EB6F809BC}.Release|iPhone.ActiveCfg = Release|iPhone
+		{B69DC3FA-15B0-4530-A4D6-372EB6F809BC}.Release|iPhone.Build.0 = Release|iPhone
+		{B69DC3FA-15B0-4530-A4D6-372EB6F809BC}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{B69DC3FA-15B0-4530-A4D6-372EB6F809BC}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{B69DC3FA-15B0-4530-A4D6-372EB6F809BC}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{B69DC3FA-15B0-4530-A4D6-372EB6F809BC}.Debug|iPhone.Build.0 = Debug|iPhone
+	EndGlobalSection
+EndGlobal
