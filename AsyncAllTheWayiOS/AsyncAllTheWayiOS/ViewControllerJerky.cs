@@ -68,75 +68,24 @@ namespace AsyncAllTheWayiOS
 
 		public override UITableViewCell GetCell(UITableView tableView, Foundation.NSIndexPath indexPath)
 		{
-			// We will need a cancellationTokenSource so we can cancel the async call if the view moves back on screen 
-			// while text is already being loaded. Without this, if a view is loading some text, but the view moves off
-			// and back on screen, the new load may take less time than the old load and then the old load will 
-			// overwrite the new text load and the wrong data will be displayed. So we will c ancel any async task on a 
-			// recycled view before loading the new text. 
-			CancellationTokenSource cts;
-
 			TableViewCellWithCTS cell = tableView.DequeueReusableCell(CellIdentifier) as TableViewCellWithCTS;
 			if (cell == null) { 
 				cell = new TableViewCellWithCTS(UITableViewCellStyle.Default, CellIdentifier); 
 			}
-			else {
-				// If cell exists, cancel any pending async text loading for this cell
-				// by calling cts.Cancel();
-				cts = cell.Cts;
 
-				// If cancellation has not already been requested, cancel the async task
-				if (!cts.IsCancellationRequested)
-				{
-					cts.Cancel();
-				}
-			}
-
-			cell.TextLabel.Text = "Placeholder";
-
-			// Create new CancellationTokenSource for this view's async call
-			cts = new CancellationTokenSource();
-
-			// Add to the Cts property of the cell
-			cell.Cts = cts;
-
-			// Get the cancellation token to pass into the async method
-			var ct = cts.Token;
-
-			Task.Run(async () =>
-			{
-				try
-				{
-					string text = await GetTextAsync(indexPath.Row, ct);
-					InvokeOnMainThread(()=> {
-						cell.TextLabel.Text = text;
-					});
-
-				}
-				catch (System.OperationCanceledException ex)
-				{
-					Console.WriteLine($"Text load cancelled: {ex.Message}");
-				}
-				catch (Exception ex)
-				{
-					Console.WriteLine(ex.Message);
-				}
-			}, ct);
+			string text = GetTextAsync(indexPath.Row).Result;
+			cell.TextLabel.Text = text;
 
 			return cell;
 		}
 
-		async Task<string> GetTextAsync(int position, CancellationToken ct)
+		async Task<string> GetTextAsync(int position)
 		{
-			// Check to see if task was cancelled, if so throw cancelled exception.
-			// Good to check at several points, including just prior to returning the string. 
-			ct.ThrowIfCancellationRequested();
-			await Task.Delay(rand.Next(100, 500)); // to simulate a task that takes variable amount of time
-			ct.ThrowIfCancellationRequested();
+			await Task.Delay(rand.Next(100, 500)).ConfigureAwait(false); // to simulate a task that takes variable amount of time
 			if (client == null)
 				client = new HttpClient();
-			string response = await client.GetStringAsync("http://example.com");
+			string response = await client.GetStringAsync("http://example.com").ConfigureAwait(false);
 			string stringToDisplayInList = response.Substring(41, 14) + " " + position.ToString();
-			ct.ThrowIfCancellationRequested();
 			return stringToDisplayInList;
 		}
 	}

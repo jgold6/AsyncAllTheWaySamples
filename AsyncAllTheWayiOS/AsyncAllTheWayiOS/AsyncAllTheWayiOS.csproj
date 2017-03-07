@@ -106,6 +106,10 @@
   <ItemGroup>
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
+    <None Include="ViewController.designerJerky.cs">
+      <DependentUpon>ViewControllerJerky.cs</DependentUpon>
+    </None>
+    <None Include="ViewControllerJerky.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />

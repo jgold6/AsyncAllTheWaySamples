@@ -76,82 +76,27 @@ namespace AsyncAllTheWayAndroid
 
 		public override View GetView(int position, View convertView, ViewGroup parent)
 		{
-			// We will need a CancellationTokenSource so we can cancel the async call if the view moves back on screen 
-			// while text is already being loaded. Without this, if a view is loading some text, but the view moves off
-			// and back on screen, the new load may take less time than the old load and then the old load will 
-			// overwrite the new text load and the wrong data will be displayed. So we will c ancel any async task on a 
-			// recycled view before loading the new text. 
-			CancellationTokenSource cts; 
-
 			// re-use an existing view, if one is available
 			View view = convertView; 
 			// Otherwise create a new one
 			if (view == null) {
 				view = context.LayoutInflater.Inflate(Android.Resource.Layout.SimpleListItem1, null);
 			}
-			else
-			{
-				// If view exists, cancel any pending async text loading for this view
-				// by calling cts.Cancel(); method
-				var wrapper = view.Tag.JavaCast<Wrapper<CancellationTokenSource>>();
-				cts = wrapper.Data;
-
-				// If cancellation has not already been requested, cancel the current async download task
-				// for this view. 
-				if (!cts.IsCancellationRequested)
-				{
-					cts.Cancel();
-				}
-			}
-
 			TextView textView = view.FindViewById<TextView>(Android.Resource.Id.Text1);
-			textView.Text = "placeholder";
 
-			// Create new CancellationTokenSource for this view's async call
-			cts = new CancellationTokenSource();
+			textView.Text = GetTextAsync(position).Result;
 
-			// Add it to the Tag property of the view wrapped in a Java.Lang.Object
-			view.Tag = new Wrapper<CancellationTokenSource> { Data = cts };
-
-			// Get the cancellation token to pass into the async method
-			var ct = cts.Token;
-
-			// Here we use TPL to launch a new thread, adding the async keyword to the lambda
-			// in order to be able to await any async method calls.
-			Task.Run(async () => {
-				try
-				{
-					// Call my async method, whihc in turn calls an HttpClient async method.
-					textView.Text = await GetTextAsync(position, ct);
-				}
-				// Catch the exception when the async method is cancelled
-				catch (System.OperationCanceledException ex)
-				{
-					Console.WriteLine($"Text load cancelled: {ex.Message}");
-				}
-				// Catch any other exceptinons that may have occured
-				catch (Exception ex)
-				{
-					Console.WriteLine(ex.Message);
-				}
-			}, ct);
 
 			return view;
 		}
 
-		async Task<string> GetTextAsync(int position, CancellationToken ct)
+		async Task<string> GetTextAsync(int position)
 		{
-			// Check to see if task was cancelled, if so throw cancelled exception.
-			// Good to check at several points, including just prior to returning the string. 
-			ct.ThrowIfCancellationRequested();
-			// to simulate a task that takes variable amount of time
-			await Task.Delay(rand.Next(100,500)); 
-			ct.ThrowIfCancellationRequested();
+			await Task.Delay(rand.Next(100, 500)).ConfigureAwait(false);
 			if (client == null)
 				client = new HttpClient();
-			string response = await client.GetStringAsync("http://example.com");
+			string response = await client.GetStringAsync("http://example.com").ConfigureAwait(false);
 			string stringToDisplayInList = response.Substring(41, 14) + " " + position.ToString();
-			ct.ThrowIfCancellationRequested();
 			return stringToDisplayInList;
 		}
 

@@ -1,10 +1,10 @@
 ﻿<Properties StartupConfiguration="{41213704-12B3-4A3A-931A-9A813D2E5348}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="AsyncAllTheWayAndroid/MainActivity.cs">
     <Files>
-      <File FileName="AsyncAllTheWayAndroid/MainActivity.cs" Line="139" Column="16" />
+      <File FileName="AsyncAllTheWayAndroid/MainActivity.cs" Line="71" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.AsyncAllTheWayAndroid PreferredExecutionTarget="Android.AVD_for_Nexus_10_by_Google" />
+  <MonoDevelop.Ide.ItemProperties.AsyncAllTheWayAndroid PreferredExecutionTarget="Android.AVD_for_Nexus_5_by_Google_Marsh" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
